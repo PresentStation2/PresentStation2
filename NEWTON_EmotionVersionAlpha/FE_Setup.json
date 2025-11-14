@@ -1,7 +1,7 @@
 {
   
   "ffmpegSetup": {
-    "ffmpegPath": "C:/NEWTON_EmotionVersionAlpha/FFmpeg",
+    "ffmpegPath": "",
     "workingFS": 32000,
     "tdta_chunk": 800,
     "chunk_size": 32768    

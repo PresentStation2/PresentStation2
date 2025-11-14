@@ -68,7 +68,7 @@ class FeatureExtractor():
         return int(numpy.around( float(position - self.F0XTract.windowSize // 2) / float(self.F0XTract.sampleShift) ))
         
         
-    def ExtractFeatures(self, rawMonoAudio, tellStatus = False):
+    def ExtractFeatures(self, rawMonoAudio, tellStatus = True):
         #========================================
         # start sub-extractors ... resets for job
         #========================================        
@@ -222,16 +222,16 @@ def ProcessSingleFile(fIn, logName, setupJson):
     try:    
         FE = FeatureExtractor(logger, MyConfigHolder)
         rawMono = GetAudio(fIn, MyConfigHolder, logger)
-        FE.ExtractFeatures(rawMono, tellStatus=False)
+        FE.ExtractFeatures(rawMono, tellStatus=True)
         keys, dta = FE.TakeChosenFeatures()
+        # TODO: save as json & send to the website & update feedback
         
         out = ['features:'+'\t'+'\t'.join(keys)]    
         featureVector = featuresToArray(dta, keys)
         out.append('values:'+'\t'+'\t'.join(featureVector))
 
-        f = codecs.open(fIn+'.txt', 'w', 'utf-8')
+        f = open('features_out.txt', 'w', encoding='utf-8')
         f.write('\r\n'.join(out))
-        f.flush()
         f.close()
     except:
         logger.error(str(traceback.format_exc(limit=None, chain=True)))
@@ -315,7 +315,7 @@ def ProcessGivenPath(dataPath):
 if __name__ == '__main__':
     trgPath = ""
     
-    src = "C:\\NEWTON_EmotionVersionAlpha\\_src"
+    src = sys.argv[1] if len(sys.argv) > 1 else ""
     ProcessGivenPath(src)
     
     # *sys.argv[1:]

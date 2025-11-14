@@ -66,3 +66,457 @@ ff-tools set:    ffmpeg: C:\NEWTON_EmotionVersionAlpha\FFmpeg\ffmpeg.exe    ff
 ff-tools set:    ffmpeg: C:\NEWTON_EmotionVersionAlpha\FFmpeg\ffmpeg.exe    ffprobe: C:\NEWTON_EmotionVersionAlpha\FFmpeg\ffprobe.exe    ffmpeg available: True
 ff-tools set:    ffmpeg: C:\NEWTON_EmotionVersionAlpha\FFmpeg\ffmpeg.exe    ffprobe: C:\NEWTON_EmotionVersionAlpha\FFmpeg\ffprobe.exe    ffmpeg available: True
 ff-tools set:    ffmpeg: C:\NEWTON_EmotionVersionAlpha\FFmpeg\ffmpeg.exe    ffprobe: C:\NEWTON_EmotionVersionAlpha\FFmpeg\ffprobe.exe    ffmpeg available: True
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      "FFmpeg"
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+invalid ffPath: FFmpeg
+ConfigHolder ready: False
+ConfigHolder not ready!
+Traceback (most recent call last):
+  File "/home/pi/Machine-Learning-AGS/FeatureExtractor.py", line 227, in ProcessSingleFile
+    rawMono = GetAudio(fIn, MyConfigHolder, logger)
+  File "/home/pi/Machine-Learning-AGS/sharedComponents/Utils.py", line 29, in GetAudio
+    RawMonoProvider = RawAudioMonoProvider(logger, MyConfigHolder)
+  File "/home/pi/Machine-Learning-AGS/sharedComponents/RawAudioMonoProvider.py", line 13, in __init__
+    raise Exception('ConfigHolder not ready!')
+Exception: ConfigHolder not ready!
+
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      "FFmpeg"
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+invalid ffPath: FFmpeg
+ConfigHolder ready: False
+ConfigHolder not ready!
+Traceback (most recent call last):
+  File "/home/pi/Machine-Learning-AGS/FeatureExtractor.py", line 227, in ProcessSingleFile
+    rawMono = GetAudio(fIn, MyConfigHolder, logger)
+  File "/home/pi/Machine-Learning-AGS/sharedComponents/Utils.py", line 29, in GetAudio
+    RawMonoProvider = RawAudioMonoProvider(logger, MyConfigHolder)
+  File "/home/pi/Machine-Learning-AGS/sharedComponents/RawAudioMonoProvider.py", line 13, in __init__
+    raise Exception('ConfigHolder not ready!')
+Exception: ConfigHolder not ready!
+
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      "FFmpeg"
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+invalid ffPath: FFmpeg
+ConfigHolder ready: False
+ConfigHolder not ready!
+Traceback (most recent call last):
+  File "/home/pi/Machine-Learning-AGS/FeatureExtractor.py", line 227, in ProcessSingleFile
+    rawMono = GetAudio(fIn, MyConfigHolder, logger)
+  File "/home/pi/Machine-Learning-AGS/sharedComponents/Utils.py", line 29, in GetAudio
+    RawMonoProvider = RawAudioMonoProvider(logger, MyConfigHolder)
+  File "/home/pi/Machine-Learning-AGS/sharedComponents/RawAudioMonoProvider.py", line 13, in __init__
+    raise Exception('ConfigHolder not ready!')
+Exception: ConfigHolder not ready!
+
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+Traceback (most recent call last):
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/FeatureExtractor.py", line 226, in ProcessSingleFile
+    FE.ExtractFeatures(rawMono, tellStatus=False)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/FeatureExtractor.py", line 108, in ExtractFeatures
+    self.Formants.ComputeFormants(filteredMono, audioFS=self.config.ffmpeg_FS)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/Formanty/FormantExtractor.py", line 86, in ComputeFormants
+    formants = BURG.computeBurg(windowed, self.numberOfPoles)
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/Formanty/Burg/Burg.py", line 28, in computeBurg
+    formants, coeffs = [], self.VECburg(audioData, poleCount)
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/Formanty/Burg/Burg.py", line 236, in VECburg
+    b2new = numpy.roll(b2new,-1)
+  File "/usr/lib/python3/dist-packages/numpy/_core/numeric.py", line 1181, in _roll_dispatcher
+    def _roll_dispatcher(a, shift, axis=None):
+    
+KeyboardInterrupt
+
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+Traceback (most recent call last):
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/FeatureExtractor.py", line 227, in ProcessSingleFile
+    rawMono = GetAudio(fIn, MyConfigHolder, logger)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/FeatureExtractor.py", line 87, in ExtractFeatures
+    self.F0XTract.ComputeF0Path(filteredMono)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/F0/F0Extractor.py", line 235, in ComputeF0Path
+    self.RunBackTrack()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/F0/F0Extractor.py", line 87, in RunBackTrack
+    self.MakeForwardPass(firstVoiced)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/F0/F0Extractor.py", line 143, in MakeForwardPass
+    best_src, best_score = src, score
+              ^^^^^^^^^^
+KeyboardInterrupt
+
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+Traceback (most recent call last):
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/FeatureExtractor.py", line 225, in ProcessSingleFile
+    rawMono = GetAudio(fIn, MyConfigHolder, logger)
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/sharedComponents/Utils.py", line 30, in GetAudio
+    rawMono = RawMonoProvider.GetWholeRecording(audioIn)
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/sharedComponents/RawAudioMonoProvider.py", line 34, in GetWholeRecording
+    return self.GetMonoInTimeSpan(media, 0.0, float(duration)/float(self.FS))
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/sharedComponents/RawAudioMonoProvider.py", line 68, in GetMonoInTimeSpan
+    outPut[realIndex-begIndex] = tdta[0,i]
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+
+====== FE setup: =======
+  configHolderVersion:    0.1.0
+  ffmpeg/ffPath:      ""
+  ffmpeg/FS:          32000
+  ffmpeg/tdtaChunk:   800
+  ffmpeg/bigChunk:    32768
+  F0/minF0:           75.0
+  F0/maxF0:           400.0
+  F0/timeStep:        0.01
+  FeatExt/filter:     [-0.000995974052, -0.000558003312, 0.000176216063, 0.000889996854, 0.00109621303, 0.000357481068, -0.00130988953, -0.00314342139, -0.00383375365, -0.00232422772, 0.00119152284, 0.00484232741, 0.005829532, 0.00222416505, -0.00521180568, -0.0125811333, -0.014596713, -0.00794847792, 0.00563647292, 0.0189121757, 0.0223166564, 0.00975332949, -0.0161376953, -0.0426981122, -0.0516900683, -0.028043738, 0.0312913629, 0.11329508, 0.192468831, 0.24102801, 0.24102801, 0.192468831, 0.11329508, 0.0312913629, -0.028043738, -0.0516900683, -0.0426981122, -0.0161376953, 0.00975332949, 0.0223166564, 0.0189121757, 0.00563647292, -0.00794847792, -0.014596713, -0.0125811333, -0.00521180568, 0.00222416505, 0.005829532, 0.00484232741, 0.00119152284, -0.00232422772, -0.00383375365, -0.00314342139, -0.00130988953, 0.000357481068, 0.00109621303, 0.000889996854, 0.000176216063, -0.000558003312, -0.000995974052]
+  Intens/minPitch:    80.0
+  Intens/mSilDur:     0.3
+  Intens/mVoicDur:    0.1
+  Intens/minDip:      2.0
+  Intens/SilVoice:    25.0
+  Formant/timeStep:   0.00625
+  Formant/maxNofFmts: 6.0
+  Formant/maxFmtFreq: 5500
+  Formant/winLength:  0.025
+  Formant/preemFreq:  50.0
+  Formant/freqMargin: 50.0
+  IPU/frameSize:      5600
+  IPU/frameShift:     2800
+  IPU/filter:         [0.1, 0.2, 0.4, 0.2, 0.1]
+========================
+ConfigHolder ready: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True
+ff-tools set:    ffmpeg: ffmpeg    ffprobe: ffprobe    ffmpeg available: True

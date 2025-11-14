@@ -156,7 +156,7 @@ class Burg():
 
     
     def Roots_fixIntoUnitCircle(self, roots):
-        z10 = numpy.complex(1,0)
+        z10 = complex(1,0)
         for iroot in range(roots.shape[0]):
             if numpy.abs(roots[iroot]) > 1.0:
                 roots[iroot] = z10 / numpy.conj(roots[iroot])
