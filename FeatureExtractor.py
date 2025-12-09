@@ -219,12 +219,12 @@ def featuresToArray(dta,ks):
     
     
     
-def ProcessSingleFile(fIn, logName, setupJson):
+def ProcessSingleFile(rawMono, logName, setupJson):
     MyConfigHolder, logger = InitConfig(setupJson, logName)
     try:    
         FE = FeatureExtractor(logger, MyConfigHolder)
          
-        rawMono = GetAudio(fIn, MyConfigHolder, logger)
+        #rawMono = GetAudio(fIn, MyConfigHolder, logger)
         FE.ExtractFeatures(rawMono, tellStatus=False)
         keys, dta = FE.TakeChosenFeatures()
         

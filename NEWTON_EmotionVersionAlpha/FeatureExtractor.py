@@ -8,6 +8,8 @@ from IPU.IPUs import IPUs
 
 from sharedComponents.Gender import Gender
 
+from F0.GenderEstimator import GenderEstimator
+
 from FeatureHolder.Features import Features
 import re
 import pickle
@@ -31,6 +33,8 @@ class FeatureExtractor():
         
         self.Features = Features(logger)
         
+        self.GenderEstimator = GenderEstimator()
+
         self.F0_f1 = 0.0
         self.F0_f2 = 0.0
         self.F0_H1 = 0.0 
@@ -145,36 +149,48 @@ class FeatureExtractor():
         
         self.Features = Features(self.logger)
     
-    
+    def EstimateAndPrintGender(self):
+        meanF0 = self.Features.F0.Mean
+        minF0 = self.Features.F0.Min
+        q10F0 = self.Features.F0.Q10
+
+        gender_enum = self.GenderEstimator.LenkaTree(meanF0, minF0, q10F0)
+
+        if gender_enum == Gender.F:
+            gender_string = 'Female'
+        elif gender_enum == Gender.M:
+            gender_string = 'Male'
+        else:
+            gender_string = 'Unknown'
+
+        print(f"  .. getting Speaker Gender: {gender_string}")
+        return gender_string
+
+    def EstimateAndPrintGender(self):
+        meanF0 = self.Features.F0.Mean
+        minF0 = self.Features.F0.Min
+        q10F0 = self.Features.F0.Q10
+
+        gender_enum = self.GenderEstimator.LenkaTree(meanF0, minF0, q10F0)
+
+        if gender_enum == Gender.F:
+            gender_string = 'Female'
+        elif gender_enum == Gender.M:
+            gender_string = 'Male'
+        else:
+            gender_string = 'Unknown'
+
+        print(f"  .. getting Speaker Gender: {gender_string}")
+        return gender_string
+
     def TakeChosenFeatures(self):
-        keyOrder = [ 'minF0', 'maxF0', 'meanF0', 'F0range', 'F0std', 'F0q10', 'F0q90', 'meanF1',
-            'meanF2', 'meanF3', 'meanF2+3', 'H1-H2', 'H1-H2std', 'H1-A1', 'H1-A1std', 'H1-A2', 'H1-A2std', 
-            'H1-A3', 'H1-A3std', 'pauseCount', 'meanPauseDuration', 'meanSpeakingRate', 'RMSmean', 'RMSstd']
+        keyOrder = ['meanF0', 'F0std', 'meanF1', 'H1-A3', 'pauseCount']
         features = {
-            'minF0': self.Features.F0.Min,
-            'maxF0': self.Features.F0.Max,
             'meanF0': self.Features.F0.Mean,
-            'F0range': self.Features.F0.SemitoneRange,
             'F0std': self.Features.F0.Std,
-            'F0q10': self.Features.F0.Q10,
-            'F0q90': self.Features.F0.Q90,
             'meanF1': self.Features.VoiceColor.F1,
-            'meanF2': self.Features.VoiceColor.F2,
-            'meanF3': self.Features.VoiceColor.F3,
-            'meanF2+3': self.Features.VoiceColor.F2plusF3,
-            'H1-H2': self.Features.VoiceColor.H1minusH2,
-            'H1-H2std': self.Features.VoiceColor.H1minusH2_std,
-            'H1-A1': self.Features.VoiceColor.H1minusA1,
-            'H1-A1std': self.Features.VoiceColor.H1minusA1_std,
-            'H1-A2': self.Features.VoiceColor.H1minusA2,
-            'H1-A2std': self.Features.VoiceColor.H1minusA2_std,
             'H1-A3': self.Features.VoiceColor.H1minusA3,
-            'H1-A3std': self.Features.VoiceColor.H1minusA3_std,
-            'pauseCount': self.Features.Intensity.NPause,
-            'meanPauseDuration': self.Features.Intensity.MeanPauseDuration,
-            'meanSpeakingRate': self.Features.getArticulationRate(),
-            'RMSmean': self.Features.Intensity.RMSMean,
-            'RMSstd': self.Features.Intensity.RMSStd
+            'pauseCount': self.Features.Intensity.NPause
             }
         
         return keyOrder, features
@@ -217,24 +233,27 @@ def featuresToArray(dta,ks):
     return out
     
     
-def ProcessSingleFile(fIn, logName, setupJson):
+def ProcessSingleFile(rawMono, logName, setupJson):
     MyConfigHolder, logger = InitConfig(setupJson, logName)
     try:    
         FE = FeatureExtractor(logger, MyConfigHolder)
-        rawMono = GetAudio(fIn, MyConfigHolder, logger)
-        FE.ExtractFeatures(rawMono, tellStatus=True)
+         
+        #rawMono = GetAudio(fIn, MyConfigHolder, logger)
+        FE.ExtractFeatures(rawMono, tellStatus=False)
+        speaker_gender = FE.EstimateAndPrintGender()
         keys, dta = FE.TakeChosenFeatures()
-        # TODO: save as json & send to the website & update feedback
         
         out = ['features:'+'\t'+'\t'.join(keys)]    
         featureVector = featuresToArray(dta, keys)
         out.append('values:'+'\t'+'\t'.join(featureVector))
-
-        f = open('features_out.txt', 'w', encoding='utf-8')
-        f.write('\r\n'.join(out))
-        f.close()
+        
     except:
         logger.error(str(traceback.format_exc(limit=None, chain=True)))
+    
+    return featureVector, speaker_gender
+
+        
+    
 
 
 def findAudioRecordings(path, exts):
@@ -291,6 +310,7 @@ def ProcessGivenPath(dataPath):
         setupJson = 'FE_Setup.json'
         
         try:
+
         
             if os.path.isfile(dataPath):
                 ex = os.path.splitext(dataPath)[-1]
@@ -312,6 +332,39 @@ def ProcessGivenPath(dataPath):
             print( str(traceback.format_exc(limit=None, chain=True)) )
             
 
+def ExtractFeaturesFromArray(self, rawMonoAudio_np, sample_rate, tellStatus=True):
+    """
+    Extract features directly from numpy array (for RAM-based processing)
+    
+    Args:
+        rawMonoAudio_np: numpy array of audio samples (int16 or float32)
+        sample_rate: sample rate in Hz (should be 32000)
+        tellStatus: whether to print status messages
+        
+    Returns:
+        tuple: (keyOrder, features_dict) same as TakeChosenFeatures()
+    """
+    # Convert int16 to float32 if needed (normalize to [-1, 1])
+    if rawMonoAudio_np.dtype == numpy.int16:
+        rawMono = rawMonoAudio_np.astype(numpy.float32) / 32768.0
+    elif rawMonoAudio_np.dtype == numpy.float32 or rawMonoAudio_np.dtype == numpy.float64:
+        rawMono = rawMonoAudio_np.astype(numpy.float32)
+    else:
+        # For any other type, convert to float32
+        rawMono = rawMonoAudio_np.astype(numpy.float32)
+    
+    # Verify sample rate matches config
+    if sample_rate != self.config.ffmpeg_FS:
+        self.logger.warning(
+            f"Sample rate mismatch: got {sample_rate}, expected {self.config.ffmpeg_FS}"
+        )
+    
+    # Call the existing extraction method (already expects float32)
+    self.ExtractFeatures(rawMono, tellStatus=tellStatus)
+    
+    # Return features in the same format as ProcessSingleFile uses
+    return self.TakeChosenFeatures()
+   
 if __name__ == '__main__':
     trgPath = ""
     
