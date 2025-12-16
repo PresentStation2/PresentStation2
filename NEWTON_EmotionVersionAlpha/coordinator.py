@@ -10,13 +10,16 @@ from FeatureExtractor import ProcessSingleFile
 import os
 import sys
 from Categorizer import Categorize
+
 import serial
 import time
+from sound import play_sound
 
 app = FastAPI()
 
 categorized_values = []
-real_time_categories = []
+
+real_time_categories = ['idle', 'meanF0','happy']
 
 dataPath = sys.argv[1]
 logName = os.path.join(os.path.split(dataPath)[0], 'featureExtractor.log')
@@ -37,26 +40,77 @@ def send_data_back_to_laravel(data):
     except Exception as e:
         print("Error sending data to Laravel:", e)
 
-def buffer_analyzer():
+def buffer_analyzer(duration):
+    #start_time=time.time()
+    #end_time=start_time+duration
+    
     global rolling_buffer, buffer_lock, is_recording, real_time_categories
-    time.sleep(40)
-    while is_recording:
-
+    ser = serial.Serial(port ='/dev/ttyACM0', baudrate=115200)
+    serf = serial.Serial(port ='/dev/ttyUSB0', baudrate=115200)
+    ser.write(f"timer stop\n".encode())
+    ser.write(f"timer {duration}\n".encode())
+    ser.write(f"body average\n".encode()) #body in initialization
+    serf.write(f"good\n".encode()) #face initialization
+    #play sounds for start
+    play_sound('/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/sounds/level-win.wav')
+    time.sleep(3)
+    play_sound('/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/sounds/race-start-beeps.wav')
+    ser.write(f"tracking on\n".encode()) #position tracking
+    ser.write("timer start\n".encode())
+    current_category = "average"
+    time.sleep(25)
+    amount_loops=int((duration-40)/15)
+    remainder=duration %20
+    while amount_loops>0:
+        #time.sleep(15)
+        amount_loops=amount_loops-1
+   # while time.time()<end_time:
+        time.sleep(20)
         with buffer_lock:
             buffer_array = np.array(rolling_buffer, dtype=np.int16)
         print("Processing now start")
-        features_buffer = ProcessSingleFile(buffer_array, logName, 'FE_Setup.json') #import ml module and call ml function here if im correct on buffer_array
+        try:    
+            features_buffer = ProcessSingleFile(buffer_array, logName, 'FE_Setup.json') #import ml module and call ml function here if im correct on buffer_array
+        except:
+            ser.write(f"body idle\n".encode()) #body set to idle
+            serf.write(f"good\n".encode()) #face set to happy
+
         cat = Categorize(features_buffer, 1)
-        real_time_categories.append(cat[1])
-        real_time_categories.append(cat[2])
-        real_time_categories.append(cat[3])
-        #ser = serial.Serial(port ='/dev/ttyUSB0', baudrate=9600, timeout=1)
-        #time.sleep(2) 
-        #ser.write(f'C{real_time_categories[0]}\n'.encode())
+        real_time_categories[0]=cat[1] #color
+        real_time_categories[1]=cat[2] #face
+        real_time_categories[2]=cat[3] #icon
+        
+        body = real_time_categories[0]
+        face = real_time_categories[1]
+        icon = real_time_categories[2]
+        serf.write(f"{face}\n".encode()) #face
+        ser.write(f"icon {icon}\n".encode()) #icon
+        ser.write(f"body {body}\n".encode()) #body
+        print({face},{body},{icon})
+
+        #Nodding
+        if current_category == "extreme" and body == "average":
+            #Nodding yes
+            ser.write(f"nod\n".encode())
+        if current_category == "extreme" and body == "good":
+            #Nodding yes
+            ser.write(f"nod\n".encode())
+        if current_category == "average" and body == "good":
+            #Nodding yes
+            ser.write(f"nod\n".encode())
+
+        current_category = body
+
         for i in features_buffer:
             print('Buffer value: ', i)
         print("Processing now end")
-        time.sleep(20)
+        
+    time.sleep(remainder)
+    ser.write(f"tracking off\n".encode()) #position tracking
+
+    
+    ser.write(f"body idle\n".encode()) #body set to idle
+    serf.write(f"good\n".encode()) #face set to happy
 
 def record_audio(duration, user_id):
     global is_recording, rolling_buffer, full_recording, buffer_lock, categorized_values
@@ -85,10 +139,15 @@ def record_audio(duration, user_id):
                         input=True,
                         frames_per_buffer=CHUNK)
         
-        threading.Thread(target=buffer_analyzer, daemon=True).start()
-
+        worker=threading.Thread(target=buffer_analyzer, args=(duration,), daemon=True)
+        worker.start()
+        
+        time.sleep(10)
+        
         start_time = time.time()
-        while time.time() - start_time < duration+10:
+        #end_time=start_time+duration
+        while time.time() - start_time < duration:
+        #while end_time<time.time():
             data = stream.read(CHUNK, exception_on_overflow=False)
             audio_chunk = np.frombuffer(data, dtype=np.int16)
             with buffer_lock:
@@ -97,37 +156,9 @@ def record_audio(duration, user_id):
         # Save full recording
         with buffer_lock:
             full_array = np.array(full_recording, dtype=np.int16)
-        print("Processing now start")
-        features_full = ProcessSingleFile(full_array, logName, 'FE_Setup.json') #import ml module and call ml function here if im correct on full_array
-        for i in features_full:
-            print('Full value: ', i)
-        durationMinutes = float(duration / 60)
-        categorized_values = Categorize(features_full, durationMinutes)
-        categorized_values[0]['user_id'] = user_id
-        web_categories = categorized_values[0]
-        for i in features_full:
-            print('Full value: ', i)
-        print("Processing now end")
-
-        wf_full = wave.open("full_audio.wav", 'wb')
-        wf_full.setnchannels(CHANNELS)
-        wf_full.setsampwidth(p.get_sample_size(FORMAT))
-        wf_full.setframerate(RATE)
-        wf_full.writeframes(full_array.tobytes())
-        wf_full.close()
-
-        # Save 40-second buffer
-        with buffer_lock:
-            buffer_array = np.array(rolling_buffer, dtype=np.int16)
-        wf_buffer = wave.open("buffer_audio.wav", 'wb')
-        wf_buffer.setnchannels(CHANNELS)
-        wf_buffer.setsampwidth(p.get_sample_size(FORMAT))
-        wf_buffer.setframerate(RATE)
-        wf_buffer.writeframes(buffer_array.tobytes())
-        wf_buffer.close()
-
         print("Recording finished and saved")
-
+        play_sound('/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/sounds/applause.wav')
+        
     finally:
         if stream is not None:
             stream.stop_stream()
@@ -135,10 +166,29 @@ def record_audio(duration, user_id):
         if p is not None: 
             p.terminate()
         is_recording = False
+    worker.join()
+    print("Processing now start")
+    features_full = ProcessSingleFile(full_array, logName, 'FE_Setup.json') #import ml module and call ml function here if im correct on full_array
+    for i in features_full:
+        print('Full value: ', i)
+    durationMinutes = float(duration / 60)
+    categorized_values = Categorize(features_full, durationMinutes)
+    categorized_values[0]['user_id'] = user_id
+    web_categories = categorized_values[0]
+    for i in features_full:
+        print('Full value: ', i)
+    print("Processing now end")
 
+     # Save 40-second buffer
+    #with buffer_lock:
+       #buffer_array = np.array(rolling_buffer, dtype=np.int16)
+
+    #print("Recording finished and saved")
 
     # Send callback to Laravel
     send_data_back_to_laravel(web_categories)
+
+
 
 @app.post("/start-recording")
 def start_recording(data: dict):
