@@ -11,7 +11,7 @@ import os
 import sys
 from Categorizer import Categorize
 
-import serial
+'''import serial'''
 import time
 from sound import play_sound
 
@@ -19,13 +19,13 @@ app = FastAPI()
 
 categorized_values = []
 
-real_time_categories = ['idle', 'meanF0','happy']
+'''real_time_categories = ['idle', 'meanF0','happy']'''
 
 dataPath = sys.argv[1]
 logName = os.path.join(os.path.split(dataPath)[0], 'featureExtractor.log')
 
 is_recording = False
-rolling_buffer = deque(maxlen=32000 * 40)
+'''rolling_buffer = deque(maxlen=32000 * 40)'''
 full_recording = deque()
 buffer_lock = threading.Lock()
 
@@ -40,7 +40,7 @@ def send_data_back_to_laravel(data):
     except Exception as e:
         print("Error sending data to Laravel:", e)
 
-def buffer_analyzer(duration):
+'''def buffer_analyzer(duration):
     #start_time=time.time()
     #end_time=start_time+duration
     
@@ -111,13 +111,14 @@ def buffer_analyzer(duration):
     
     ser.write(f"body idle\n".encode()) #body set to idle
     serf.write(f"good\n".encode()) #face set to happy
+'''
 
 def record_audio(duration, user_id):
     global is_recording, rolling_buffer, full_recording, buffer_lock, categorized_values
     is_recording = True
     with buffer_lock:
-        full_recording.clear()
-        rolling_buffer.clear()
+        '''full_recording.clear()
+        rolling_buffer.clear()'''
 
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
@@ -139,8 +140,8 @@ def record_audio(duration, user_id):
                         input=True,
                         frames_per_buffer=CHUNK)
         
-        worker=threading.Thread(target=buffer_analyzer, args=(duration,), daemon=True)
-        worker.start()
+        '''worker=threading.Thread(target=buffer_analyzer, args=(duration,), daemon=True)
+        worker.start()'''
         
         time.sleep(10)
         
@@ -166,7 +167,8 @@ def record_audio(duration, user_id):
         if p is not None: 
             p.terminate()
         is_recording = False
-    worker.join()
+    '''worker.join()'''
+
     print("Processing now start")
     features_full = ProcessSingleFile(full_array, logName, 'FE_Setup.json') #import ml module and call ml function here if im correct on full_array
     for i in features_full:
