@@ -153,12 +153,12 @@ def record_audio(duration, user_id):
             audio_chunk = np.frombuffer(data, dtype=np.int16)
             with buffer_lock:
                 full_recording.extend(audio_chunk)
-                rolling_buffer.extend(audio_chunk)
+                #rolling_buffer.extend(audio_chunk)
         # Save full recording
         with buffer_lock:
             full_array = np.array(full_recording, dtype=np.int16)
         print("Recording finished and saved")
-        play_sound('/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/sounds/applause.wav')
+        #play_sound('/home/pi/Machine-Learning-AGS/NEWTON_EmotionVersionAlpha/sounds/applause.wav')
         
     finally:
         if stream is not None:
